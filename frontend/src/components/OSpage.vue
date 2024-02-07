@@ -13,7 +13,7 @@
             </router-link>
         </div>
         <div class="linux">
-            <router-link :to="`/lin/category`">
+            <router-link :to="`/lin/os-page`">
                 Linux
             </router-link>
         </div>

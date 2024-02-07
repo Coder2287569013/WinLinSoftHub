@@ -5,12 +5,13 @@
 
   const data = ref([]);
   const route = useRoute();
-  const categoryParam = ref(route.params.category || '');
+  const categoryParam = ref(route.params.category_l || '');
+  const osParam = ref(route.params.os || '');
   const sortOrder = ref('high-to-low'); 
 
   onMounted(async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/info-win");
+      const response = await axios.get("http://127.0.0.1:8000/info-lin");
       data.value = response.data;
       console.log(data.value);
     } catch (error) {
@@ -36,7 +37,7 @@
 
 <template>
   <head>
-    <title>Windows: {{ categoryParam }}</title>
+    <title>{{ osParam }}: {{ categoryParam }}</title>
   </head>
   <div>
     <select class="sortSelect" v-model="sortOrder">
@@ -46,13 +47,22 @@
     </select>
     <div class="db-info" v-if="sortedData">
       <div class="info-progs" v-for="item in sortedData">
-        <div class="prog-info" v-if="!categoryParam || item.category == categoryParam">
+        <div class="prog-info" v-if="!categoryParam || item.category == categoryParam && item.compatibility.includes(osParam)">
           <img :src="item.url_image" width="128px" height="128px"><br>
           <div class="prog-text">
             Name: {{ item.name }}<br>
             Compatibility: {{ item.compatibility }}<br>
             Rating: {{ item.rating }}<br>
-            <a :href="item.url_download">Download {{ item.name }}</a><br>
+            <div class="install-section">
+                <span class="install-label">How to install:</span>
+                <ul class="install-commands">
+                    <code>
+                        <li v-for="(command, index) in item.cmd_install.split(',')" :key="index">
+                          {{ index+1 }}. {{ command.trim() }} 
+                        </li>
+                    </code>
+                </ul>
+            </div>
           </div>
         </div>
       </div>

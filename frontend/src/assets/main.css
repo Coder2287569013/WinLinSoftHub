@@ -29,7 +29,7 @@ a,
     padding: 10px 15px; 
   }
 }
-.win-prog-info {
+.prog-info {
   padding-bottom: 40px;
 }
 img {
@@ -37,7 +37,7 @@ img {
   margin-right: 20px;
 }
 
-.win-prog-text {
+.prog-text {
   margin-left: 20px;
 }
 
@@ -54,4 +54,26 @@ img {
   transition: 0.4s; 
   margin-bottom: 20px; 
   cursor: pointer; 
+}
+.install-section {
+  display: flex;
+  align-items: center;
+}
+
+.install-label {
+  margin-right: 10px; 
+}
+
+ul.install-commands {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+code {
+  background-color: rgb(60,60,60);
+  border-radius: 4px;
+  padding: 2px 4px;
+  font-family: monospace;
+  display: block; 
 }

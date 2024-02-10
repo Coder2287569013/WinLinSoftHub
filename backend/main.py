@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import sqlite3
 import database
@@ -16,7 +16,6 @@ app.add_middleware(
     allow_methods=["*"],  
     allow_headers=["*"],  
 )
-
 @app.get("/info-win")
 async def root():
     conn = database.get_db_connection()
@@ -76,22 +75,22 @@ async def getLinOS(os: dict):
     os_c = os['_value']
     return os
 
-@app.post("/new-user-register")
-async def user_reg(userInfo: dict):
-    global newUser
-    newUser = userInfo
-
-@app.get("/add-new-user")
-async def add_user():
-    global newUser
+@app.post("/register")
+async def register_user(userInfo: dict):
     conn = database.get_db_connection()
-    users_db = conn.execute('SELECT username, email from user_info').fetchall()
-    users = [[str(item['username']), str(item['email'])] for item in users_db]
+    users_db = conn.execute('SELECT username, email FROM user_info WHERE username = ? OR email = ?', (userInfo['username'], userInfo['email'])).fetchone()
     
-    user_exists = any(newUser['username'] == user[0] and newUser['email'] == user[1] for user in users)
+    if users_db:
+        return JSONResponse(status_code=400, content={"message": "Username or email already exists."})
     
-    if not user_exists:
-        info = tuple(newUser.values())
-        conn.execute('INSERT INTO user_info(username, email, password) VALUES (?, ?, ?)', info)
-        conn.commit()
-    return newUser
+    conn.execute('INSERT INTO user_info(username, email, password) VALUES (?, ?, ?)', (userInfo['username'], userInfo['email'], userInfo['password']))
+    conn.commit()
+    conn.close()
+    return {"message": "User added successfully"}
+
+@app.get("/get-user-login")
+async def user_login():
+    conn = database.get_db_connection()
+    users_db = conn.execute('SELECT username, email, password from user_info').fetchall()
+    users = [[str(item['username']),str(item['email']),str(item['password'])] for item in users_db]
+    return users

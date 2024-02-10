@@ -15,7 +15,7 @@
   const addUser = async () => {
     try {
       newUser.value.password = await hashPassword(newUser.value.password);
-      const response = await axios.post('https://127.0.0.1:8000/register', newUser.value);
+      const response = await axios.post('https://wlshback.onrender.com/register', newUser.value);
       alert(response.data.message || 'User added successfully');
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {

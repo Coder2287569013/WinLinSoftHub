@@ -11,7 +11,7 @@
 
   onMounted(async () => {
     try {
-      const response = await axios.get("https://127.0.0.1:8000/info-lin");
+      const response = await axios.get("https://wlshback.onrender.com/info-lin");
       data.value = response.data;
       console.log(data.value);
     } catch (error) {

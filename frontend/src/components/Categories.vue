@@ -6,7 +6,7 @@
 
   onMounted(async () => {
     try {
-      const response = await axios.get("https://127.0.0.1:8000/categories");
+      const response = await axios.get("https://wlshback.onrender.com/categories");
       data.value = response.data;
       console.log(data.value);
     } catch (error) {

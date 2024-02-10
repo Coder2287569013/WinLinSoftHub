@@ -6,7 +6,7 @@
 
     onMounted(async () => {
         try {
-        const response = await axios.get("https://127.0.0.1:8000/lin-os");
+        const response = await axios.get("https://wlshback.onrender.com/lin-os");
         data.value = response.data;
         console.log(data.value);
         } catch (error) {

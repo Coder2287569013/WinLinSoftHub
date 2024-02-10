@@ -12,18 +12,20 @@
   };
   const newUser = ref({ username: '', email: '', password: '' });
 
-  const addUser = async() => {
+  const addUser = async () => {
     try {
-        newUser.value.password =  await hashPassword(newUser.value.password);
-        await axios.post('http://127.0.0.1:8000/new-user-register', newUser.value);
-        await axios.get('http://127.0.0.1:8000/add-new-user');
-        newUser.value = { username: '', email: '', password: '' };
-        alert('User added successfully');
+      newUser.value.password = await hashPassword(newUser.value.password);
+      const response = await axios.post('https://127.0.0.1:8000/register', newUser.value);
+      alert(response.data.message || 'User added successfully');
     } catch (error) {
-      console.error(error);
-      alert('Failed to add user');
+      if (error.response && error.response.data && error.response.data.message) {
+        alert(error.response.data.message);
+      } else {
+        console.error(error);
+        alert('An error occurred while trying to register. Please try again later.');
+      }
     }
-  }
+  };
 
   const emailErrors = computed(() => {
     const userEmail = newUser.value.email;
@@ -59,6 +61,9 @@
 </script>
 
 <template>
+  <head>
+    <title>WinLinSoftHub: Register</title>
+  </head>
     <div>
         <input v-model="newUser.username" placeholder="User"><br>
         <input type="email" id="email" v-model="newUser.email" placeholder="Email"><br>

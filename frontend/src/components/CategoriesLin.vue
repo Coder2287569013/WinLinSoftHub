@@ -9,8 +9,8 @@
 
   onMounted(async () => {
     try {
-      await axios.post('http://127.0.0.1:8000/get-lin-os', osParam);
-      const response = await axios.get("http://127.0.0.1:8000/categories-lin");
+      await axios.post('https://127.0.0.1:8000/get-lin-os', osParam);
+      const response = await axios.get("https://127.0.0.1:8000/categories-lin");
       data.value = response.data;
       console.log(data.value);
     } catch (error) {

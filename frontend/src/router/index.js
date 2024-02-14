@@ -6,6 +6,7 @@ import CategoriesLin from '@/components/CategoriesLin.vue';
 import LinuxPage from '@/components/LinuxPage.vue';
 import LinProgs from '@/components/LinProgs.vue'
 import Register from '@/components/Register.vue'
+import Login from '@/components/Login.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -47,6 +48,11 @@ const router = createRouter({
             path: '/register',
             name: 'RegistrationForm',
             component: Register,
+        },
+        {
+            path: '/login',
+            name: 'LoginForm',
+            component: Login,
         },
     ]
 });

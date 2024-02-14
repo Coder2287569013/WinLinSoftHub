@@ -88,7 +88,7 @@ async def register_user(userInfo: dict):
     conn.close()
     return {"message": "User added successfully"}
 
-@app.get("/get-user-login")
+@app.get("/get-users-login")
 async def user_login():
     conn = database.get_db_connection()
     users_db = conn.execute('SELECT username, email, password from user_info').fetchall()

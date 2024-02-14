@@ -91,7 +91,7 @@ async def register_user(userInfo: dict):
 @app.get("/get-users-login")
 async def user_login():
     conn = database.get_db_connection()
-    users_db = conn.execute('SELECT username, email, password from user_info').fetchall()
+    users_db = conn.execute('SELECT username, email, password FROM user_info').fetchall()
     users = [[str(item['username']),str(item['email']),str(item['password'])] for item in users_db]
     return users
 
@@ -99,6 +99,7 @@ async def user_login():
 async def users_activity(userActivity: dict):
     conn = database.get_db_connection()
     conn.execute('INSERT INTO user_activity(username,is_active) VALUES (?,?)',(userActivity['_value']['username'],userActivity['_value']['is_active']))
+    conn.execute('SELECT username, is_active FROM user_activity')
     conn.commit()
     conn.close()
     return userActivity

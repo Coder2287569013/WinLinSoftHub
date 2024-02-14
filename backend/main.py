@@ -96,8 +96,8 @@ async def user_login():
     return users
 
 @app.post("/users-activity")
-async def users_activity(userActive: dict):
+async def users_activity(userActivity: dict):
     conn = database.get_db_connection()
-    conn.execute('INSERT INTO user_activity(username,is_active) VALUES (?,?)',(userActive['username'],userActive['is_active']))
+    conn.execute('INSERT INTO user_activity(username,is_active) VALUES (?,?)',(userActivity['username'],userActivity['is_active']))
     conn.commit()
     conn.close()

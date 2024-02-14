@@ -99,7 +99,8 @@ async def user_login():
 async def users_activity(userActivity: dict):
     conn = database.get_db_connection()
     conn.execute('INSERT INTO user_activity(username,is_active) VALUES (?,?)',(userActivity['_value']['username'],userActivity['_value']['is_active']))
-    conn.execute('SELECT username, is_active FROM user_activity')
+    result = conn.execute('SELECT username, is_active FROM user_activity').fetchall()
     conn.commit()
     conn.close()
+    print(result)
     return userActivity

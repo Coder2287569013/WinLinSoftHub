@@ -3,6 +3,7 @@ import axios from 'axios';
 import {ref, onMounted, computed} from 'vue';
 
 const existUser = ref({login: '', password: ''});
+const userActivity = ref({username: '', is_active: false});
 const dataUsers = ref();
 var userActive = false;
 
@@ -29,7 +30,10 @@ const checkUser = async() => {
             if (existUser.value.password == dataUsers.value[i][2]) {
                 alert("Successfully logined!");
                 userActive = true;
-
+                userActivity.value.username = existUser.value.login;
+                userActivity.value.is_active = userActive;
+                console.log(userActivity);
+                await axios.post('https://wlshback.onrender.com/users-activity', userActivity);
             }
         }
     }

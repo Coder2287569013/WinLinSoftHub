@@ -94,3 +94,10 @@ async def user_login():
     users_db = conn.execute('SELECT username, email, password from user_info').fetchall()
     users = [[str(item['username']),str(item['email']),str(item['password'])] for item in users_db]
     return users
+
+@app.post("/users-activity")
+async def users_activity(userActive: dict):
+    conn = database.get_db_connection()
+    conn.execute('INSERT INTO user_activity(username,is_active) VALUES (?,?)',(userActive['username'],userActive['is_active']))
+    conn.commit()
+    conn.close()

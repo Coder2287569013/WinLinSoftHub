@@ -1,13 +1,13 @@
 <script setup>
-import axios from 'axios';
 import {ref, onMounted, computed} from 'vue';
+import axios from 'axios';
 
-const existUser = ref({login: '', password: ''});
-const userActivity = ref({username: '', is_active: false});
-const dataUsers = ref();
-var userActive = false;
+export const existUser = ref({login: '', password: ''});
+export const userActivity = ref({username: '', is_active: false});
+export const dataUsers = ref();
+export var userActive = false;
 
-async function hashPassword(password) {
+export async function hashPassword(password) {
     const encoder = new TextEncoder();
     const data = encoder.encode(password);
     const hashBuffer = await crypto.subtle.digest('SHA-256', data);

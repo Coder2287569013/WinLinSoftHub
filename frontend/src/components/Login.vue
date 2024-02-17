@@ -1,6 +1,6 @@
 <script setup>
-import {ref, onMounted, computed} from 'vue';
 import axios from 'axios';
+import {ref, onMounted, computed} from 'vue';
 
 export const existUser = ref({login: '', password: ''});
 export const userActivity = ref({username: '', is_active: false});

@@ -103,5 +103,7 @@ async def users_activity(userActivity: dict):
     conn.commit()
     conn.close()
     # print(result)
-    print([str(value) for value in user] for user in result)
+    for res in result:
+        for value in res:
+            print(value)
     return userActivity

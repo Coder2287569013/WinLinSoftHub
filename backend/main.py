@@ -103,7 +103,5 @@ async def users_activity(userActivity: dict):
     conn.commit()
     conn.close()
     # print(result)
-    for res in result:
-        for value in res:
-            print(value)
+    print(f"{user['username']}, {user['is_active']}" for user in result)
     return userActivity

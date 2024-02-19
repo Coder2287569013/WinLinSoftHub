@@ -102,5 +102,5 @@ async def users_activity(userActivity: dict):
     result = conn.execute('SELECT username, is_active FROM user_activity').fetchall()
     conn.commit()
     conn.close()
-    print(str(item['username']) for item in result)
+    print(item['username'] for item in result)
     return userActivity

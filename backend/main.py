@@ -8,6 +8,7 @@ app = FastAPI()
 category = None
 newUser = None
 os_c = None
+user_active = False
 
 app.add_middleware(
     CORSMiddleware,
@@ -95,10 +96,15 @@ async def user_login():
     users = [[str(item['username']),str(item['email']),str(item['password'])] for item in users_db]
     return users
 
-@app.post("/users-activity")
+@app.post("/post-users-activity")
 async def users_activity(userActivity: dict):
+    global user_active
     conn = database.get_db_connection()
-    conn.execute('INSERT INTO user_activity(username,is_active) VALUES (?,?)',(userActivity['_value']['username'],userActivity['_value']['is_active']))
+    active = conn.execute('SELECT username, is_active FROM user_activity WHERE username = ? AND is_active = 1',userActivity['_value']['username']).fetchone()
+    if active:
+        return JSONResponse(status_code=400, content={"message": "User already have logined"})
+    
+    conn.execute('INSERT INTO user_activity(username,is_active) VALUES (?,?)',[userActivity['_value']['username'],userActivity['_value']['is_active']])
     result = conn.execute('SELECT username, is_active FROM user_activity').fetchall()
     conn.commit()
     conn.close()
@@ -106,4 +112,10 @@ async def users_activity(userActivity: dict):
     for res in result:
         for value in res:
             print(value)
+            if value == '1':
+                user_active = True
     return userActivity
+@app.get("get-user-activity")
+async def getActivity():
+    global user_active
+    return user_active

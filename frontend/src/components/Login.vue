@@ -33,7 +33,7 @@ const checkUser = async() => {
                 userActivity.value.username = existUser.value.login;
                 userActivity.value.is_active = userActive;
                 console.log(userActivity);
-                await axios.post('https://wlshback.onrender.com/users-activity', userActivity);
+                await axios.post('https://wlshback.onrender.com/post-users-activity', userActivity);
             }
         }
     }

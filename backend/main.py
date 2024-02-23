@@ -115,7 +115,8 @@ async def users_activity(userActivity: dict):
             if value == '1':
                 user_active = True
     return userActivity
-@app.get("get-user-activity")
+
+@app.get("/get-user-activity")
 async def getActivity():
     global user_active
     return user_active

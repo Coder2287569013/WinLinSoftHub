@@ -100,7 +100,7 @@ async def user_login():
 async def users_activity(userActivity: dict):
     global user_active
     conn = database.get_db_connection()
-    active = conn.execute('SELECT username, is_active FROM user_activity WHERE username = ? AND is_active = 1',userActivity['_value']['username']).fetchone()
+    active = conn.execute('SELECT username, is_active FROM user_activity WHERE username = ? AND is_active = ?',[userActivity['_value']['username'],userActivity['_value']['is_active']]).fetchone()
     if active:
         return JSONResponse(status_code=400, content={"message": "User already have logined"})
     

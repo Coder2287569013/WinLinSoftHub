@@ -112,7 +112,7 @@ async def users_activity(userActivity: dict):
     for res in result:
         for value in res:
             print(value)
-            if value == '1':
+            if value == 1:
                 user_active = True
     return userActivity
 

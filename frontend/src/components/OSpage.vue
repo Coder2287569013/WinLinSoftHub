@@ -10,9 +10,9 @@ onMounted(async () => {
     } catch (error) {
         console.log(error);
     }
-const isNotActive = computed(() => {
-    return data.value == '1';
-})
+});
+const isNotActiveUser = computed(() => {
+    return data.value == false;
 })
 </script>
 
@@ -31,7 +31,7 @@ const isNotActive = computed(() => {
                 Linux
             </router-link>
         </div>
-        <button class="from for" :disabled="isNotActive">
+        <button class="from for" :disabled="isNotActiveUser">
             Hello
         </button>
     </div>

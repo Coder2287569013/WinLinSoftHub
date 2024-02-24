@@ -27,7 +27,7 @@ const isActiveUser = computed(() => {
       <li><router-link :to="`/`">Home</router-link></li>
       <li><router-link :to="`/register`">Register</router-link></li>
       <li><router-link :to="`/login`">Login</router-link></li>
-      <li><a :href="!isActiveUser ? 'javascript:void(0);' : 'https://docs.google.com/forms/d/e/1FAIpQLSf-fyY3aowjJt6qIgEk1GWsrCsXrMSpTv_JybQGhyHj8qMRdg/viewform?usp=sf_link'">Add New App</a>
+      <li><a :href="isActiveUser ? 'javascript:void(0);' : 'https://docs.google.com/forms/d/e/1FAIpQLSf-fyY3aowjJt6qIgEk1GWsrCsXrMSpTv_JybQGhyHj8qMRdg/viewform?usp=sf_link'">Add New App</a>
       </li>
     </ul>
     <router-view />

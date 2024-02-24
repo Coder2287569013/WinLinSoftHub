@@ -1,19 +1,4 @@
 <script setup>
-import axios from 'axios';
-import {ref, onMounted, computed} from 'vue';
-const data = ref();
-onMounted(async () => {
-    try {
-        const response = await axios.get("https://wlshback.onrender.com/get-user-activity");
-        data.value = response.data;
-        console.log(data.value);
-    } catch (error) {
-        console.log(error);
-    }
-});
-const isNotActiveUser = computed(() => {
-    return data.value == false;
-})
 </script>
 
 <template> 
@@ -31,8 +16,5 @@ const isNotActiveUser = computed(() => {
                 Linux
             </router-link>
         </div>
-        <button class="from for" :disabled="isNotActiveUser">
-            Hello
-        </button>
     </div>
 </template>

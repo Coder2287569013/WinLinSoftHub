@@ -28,12 +28,20 @@ const checkUser = async() => {
         if (existUser.value.login == dataUsers.value[i][1] || existUser.value.login == dataUsers.value[i][0]) {
             console.log('yes');
             if (existUser.value.password == dataUsers.value[i][2]) {
-                alert("Successfully logined!");
                 userActive = true;
                 userActivity.value.username = existUser.value.login;
                 userActivity.value.is_active = userActive;
                 console.log(userActivity);
-                await axios.post('https://wlshback.onrender.com/post-users-activity', userActivity);
+                try {
+                    const resp = await axios.post('https://wlshback.onrender.com/post-users-activity', userActivity);
+                    alert(resp.data.message || "Successfully logined!");
+                } catch (error) {
+                    console.log(error);
+                    alert(error.response.data.message);
+                }
+            }
+            else {
+                alert("Incorrect username or password!");
             }
         }
     }

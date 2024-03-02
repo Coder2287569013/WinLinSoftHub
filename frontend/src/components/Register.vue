@@ -21,7 +21,7 @@
       if (error.response && error.response.data && error.response.data.message) {
         alert(error.response.data.message);
       } else {
-        console.error(error);
+        console.log(error);
         alert('An error occurred while trying to register. Please try again later.');
       }
     }

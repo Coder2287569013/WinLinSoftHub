@@ -18,3 +18,23 @@
         </div>
     </div>
 </template>
+<style scoped>
+.links-os {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh;
+}
+.windows a {
+    font-size: 50px;
+    color: rgb(0,170,255);
+    margin-right: 50vh;
+}
+.linux a {
+    font-size: 50px;
+    background: linear-gradient(to left,
+                    black,white,yellow,white,black);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+</style>

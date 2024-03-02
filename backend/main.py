@@ -104,17 +104,13 @@ async def users_activity(userActivity: dict):
     print(userActivity['_value']['username'],userActivity['_value']['is_active'])
     if active:
         return JSONResponse(status_code=400, content={"message": "User already have logined"})
-    
-    conn.execute('INSERT INTO user_activity(username,is_active) VALUES (?,?)',[userActivity['_value']['username'],userActivity['_value']['is_active']])
-    result = conn.execute('SELECT username, is_active FROM user_activity').fetchall()
+    else:
+        conn.execute('INSERT INTO user_activity(username,is_active) VALUES (?,?)',[userActivity['_value']['username'],userActivity['_value']['is_active']])
+        user_active = userActivity['_value']['is_active']
     conn.commit()
+    print(conn.execute('SELECT username FROM user_activity').fetchall())
     conn.close()
-    # print(result)
-    for res in result:
-        for value in res:
-            print(value)
-            if value == 1:
-                user_active = True
+    print(user_active)
     return userActivity
 
 @app.get("/get-user-activity")

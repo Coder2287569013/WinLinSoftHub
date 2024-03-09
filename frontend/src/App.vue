@@ -1,8 +1,9 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, provide} from 'vue';
 import axios from 'axios';
 
 const userData = ref(null);
+provide('userData', userData)
 
 onMounted(async () => {
     try {

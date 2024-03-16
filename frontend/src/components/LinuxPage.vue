@@ -25,3 +25,8 @@
         </router-link>
     </div>
 </template>
+<style scoped>
+a {
+    font-size: 22px;
+}
+</style>

@@ -1,6 +1,7 @@
 <script setup>
   import axios from 'axios';
-  import {ref, onMounted, computed} from 'vue';
+  import {ref, computed, onMounted, onUnmounted} from 'vue';
+  import { RouterLink } from 'vue-router';
 
   async function hashPassword(password) {
     const encoder = new TextEncoder();
@@ -11,20 +12,49 @@
     return hashHex;
   };
   const newUser = ref({ username: '', email: '', password: '' });
+  var checkStatus = ref("");
+  var state = ref("");
+  var modalWindow = ref(null);
+  console.log(modalWindow);
 
+  const spanExit = function() {
+    modalWindow.value.style.display = "none";
+  }
+  onMounted(() => {
+    const handleClickOutside = (event) => {
+      if (modalWindow.value && event.target === modalWindow.value) {
+        modalWindow.value.style.display = "none";
+      }
+    };
+
+    window.addEventListener('click', handleClickOutside);
+    
+    modalWindow.handleClickOutside = handleClickOutside;
+  });
+
+  onUnmounted(() => {
+    if (modalWindow.handleClickOutside) {
+      window.removeEventListener('click', modalWindow.handleClickOutside);
+    }
+  });
   const addUser = async () => {
     try {
       newUser.value.password = await hashPassword(newUser.value.password);
       const response = await axios.post('https://wlshback.onrender.com/register', newUser.value);
-      alert(response.data.message || 'User added successfully');
+      checkStatus.value = `${response.data.message}. Go to the`;
+      document.getElementById('modalHeader').style.backgroundColor = '#5cb85c';
+      state.value = "Success";
     } catch (error) {
+      document.getElementById('modalHeader').style.backgroundColor = '#f52a2a';
+      state.value = "Error";
       if (error.response && error.response.data && error.response.data.message) {
-        alert(error.response.data.message);
+        checkStatus.value = error.response.data.message;
       } else {
         console.log(error);
-        alert('An error occurred while trying to register. Please try again later.');
+        checkStatus.value = 'An error occurred while trying to register. Please try again later.';
       }
     }
+    modalWindow.value.style.display='block';
   };
 
   const emailErrors = computed(() => {
@@ -64,6 +94,19 @@
   <head>
     <title>WinLinSoftHub: Register</title>
   </head>
+
+    <div id="modalRegister" class="modal" ref="modalWindow">
+      <div class="modal-content">
+        <div class="modal-header" id="modalHeader">
+          <span @click="spanExit" class="close">&times;</span>
+          <h1>{{ state }}</h1>
+        </div>
+        <div class="modal-body">
+          <p>{{ checkStatus }}<router-link :to="`/login`" v-if="state.includes('Success')">Login Page</router-link></p>
+        </div>
+      </div>
+    </div>
+
     <div class="container">
       <div class="description">Register</div>
       <div class="input-group">
@@ -89,11 +132,15 @@
       </div>
       <button @click="addUser" :disabled="isFormInvalid">Register</button>
     </div>
+
+    <!-- Продолжение следует, доделать модалку, оформить все красиво, и прописать себе леща, если будет выглядеть как всегда -->
 </template>
+
 <style scoped>
 .container {
+  font-size: 16px;
   margin: auto;
-  width: 50rch;
+  width: 600px;
   height: 60rch;
   margin-top: 20px;
   border-radius: 10px;
@@ -102,17 +149,22 @@
 }
 .container .description {
     text-align: center;
+    font-size: 16px;
 }
 .container .input-group label {
+  width: 100px;
   padding: 12px 12px 12px 0;
   display: inline-block;
 }
 .container .input-group input{
+  font-size: 16px;
   margin-top: 12px;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   resize: vertical;
+  width: calc(100% - 100px - 24px);
+  margin-left: 12px;
 }
 .container .input-group {
   margin: 10px 0px;
@@ -124,6 +176,7 @@
     flex-grow: 1;
 }
 .container button {
+  font-size: 16px;
   background-color: #04AA6D;
   color: white;
   border: none;
@@ -131,5 +184,64 @@
   border-radius: 4px;
   cursor: pointer;
   float: right;
+}
+
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  padding-top: 100px; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+  position: relative;
+  border-radius: 10px;
+  background-color: #333;
+  margin: auto;
+  border: 1px solid #888;
+  width: 600px;
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+.modal-body {padding: 25px 16px; font-size: 16px;}
+.modal-header {
+  border-radius: 10px;
+  padding: 2px 16px;
+  background-color: #f52a2a;
+  color: white;
+}
+
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+.close {
+  color: white;
+  float: right;
+  margin-right: 10px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
 }
 </style>

@@ -24,10 +24,18 @@
     <title>WinLinSoftHub: {{ osParam }} Categories</title>
   </head>
   <div class="db-info-l" v-if="data">
-    <div class="info-category" v-for="category_dt in data">
-      <router-link :to="`/lin/${osParam}/progs/${category_dt}`">
+      <router-link class="info-category" :to="`/lin/${osParam}/progs/${category_dt}`" v-for="category_dt in data">
         {{ category_dt }}
       </router-link>
-    </div>
   </div>
 </template>
+
+<style scoped>
+.db-info-l {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+.info-category {
+  font-size: 22px;
+}
+</style>

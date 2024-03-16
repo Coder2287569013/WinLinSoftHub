@@ -20,10 +20,17 @@
     <title>WinLinSoftHub: Windows Categories</title>
   </head>
   <div class="db-info-w" v-if="data">
-    <div class="info-category" v-for="category_dt in data">
-      <router-link :to="`/win/progs/${category_dt}`">
-        {{ category_dt }}
-      </router-link>
-    </div>
+    <router-link class="info-category" :to="`/win/progs/${category_dt}`" v-for="category_dt in data">
+      {{ category_dt }}
+    </router-link>
   </div>
 </template>
+<style scoped>
+.db-info-w {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+.info-category {
+  font-size: 22px;
+}
+</style>

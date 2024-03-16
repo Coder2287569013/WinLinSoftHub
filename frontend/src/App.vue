@@ -39,12 +39,15 @@ const isActiveUser = computed(() => {
     return userData.value === true;
 });
 console.log(isActiveUser)
-const AccessForm = function() {
+const accessForm = function() {
   if (isActiveUser.value == false) {
     modalWindow.value.style.display = 'block';
   } else {
     window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLSf-fyY3aowjJt6qIgEk1GWsrCsXrMSpTv_JybQGhyHj8qMRdg/viewform?usp=sf_link";
   }
+}
+const exitModalByURL = function() {
+  modalWindow.value.style.display = 'none'
 }
 </script>
 
@@ -58,7 +61,7 @@ const AccessForm = function() {
           <h1>Error</h1>
         </div>
         <div class="modal-body2">
-          <p>You cannot have an access to this form. Please, <router-link :to="`/register`">Sign Up</router-link> or <router-link :to="`/login`">Sign In</router-link> </p>
+          <p>You cannot have an access to this form. Please, <router-link @click="exitModalByURL" :to="`/register`">Sign Up</router-link> or <router-link @click="exitModalByURL"  :to="`/login`">Sign In</router-link> </p>
         </div>
       </div>
     </div>
@@ -68,7 +71,7 @@ const AccessForm = function() {
       <li><router-link :to="`/`">Home</router-link></li>
       <li><router-link :to="`/register`">Register</router-link></li>
       <li><router-link :to="`/login`">Login</router-link></li>
-      <li><a @click="AccessForm">Add New App</a>
+      <li><a @click="accessForm">Add New App</a>
       </li>
     </ul>
     <router-view />

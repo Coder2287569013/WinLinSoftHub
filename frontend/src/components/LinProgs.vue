@@ -8,6 +8,7 @@
   const categoryParam = ref(route.params.category_l || '');
   const osParam = ref(route.params.os || '');
   const sortOrder = ref('high-to-low'); 
+  var listCommands = null;
 
   onMounted(async () => {
     try {
@@ -48,6 +49,8 @@
     <div class="db-info" v-if="sortedData">
       <div class="info-progs" v-for="item in sortedData">
         <div class="prog-info" v-if="!categoryParam || item.category == categoryParam && item.compatibility.includes(osParam)">
+          {{ listCommands = item.cmd_install.split('||') }}
+          {{ console.log(listCommands) }}
           <img :src="item.url_image" width="128px" height="128px"><br>
           <div class="prog-text">
             Name: {{ item.name }}<br>

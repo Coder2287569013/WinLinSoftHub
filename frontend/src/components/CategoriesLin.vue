@@ -12,7 +12,6 @@
       await axios.post('https://wlshback.onrender.com/get-lin-os', osParam);
       const response = await axios.get("https://wlshback.onrender.com/categories-lin");
       data.value = response.data;
-      console.log(data.value);
     } catch (error) {
       console.log(error);
     }

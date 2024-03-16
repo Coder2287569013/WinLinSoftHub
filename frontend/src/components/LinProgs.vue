@@ -8,17 +8,29 @@
   const categoryParam = ref(route.params.category_l || '');
   const osParam = ref(route.params.os || '');
   const sortOrder = ref('high-to-low'); 
-  var listCommands = null;
+  const osList = ["Ubuntu", "Arch Linux"];
+  const isOsParam = (element) => element == osParam.value;
 
   onMounted(async () => {
     try {
       const response = await axios.get("https://wlshback.onrender.com/info-lin");
       data.value = response.data;
-      console.log(data.value);
     } catch (error) {
       console.log(error);
     }
   });
+
+  const parseCommands = function(cmd_install) {
+    var listCommands = cmd_install.split('||');
+    var index = 0;
+    if (osParam.value == "Linux Mint") {
+      index = 0;
+    } else {
+      index = osList.findIndex(isOsParam);
+    }
+    var commands = listCommands[index].split(',');
+    return commands
+  }
 
   const sortedData = computed(() => {
     if (!data.value) return [];
@@ -49,8 +61,6 @@
     <div class="db-info" v-if="sortedData">
       <div class="info-progs" v-for="item in sortedData">
         <div class="prog-info" v-if="!categoryParam || item.category == categoryParam && item.compatibility.includes(osParam)">
-          {{ listCommands = item.cmd_install.split('||') }}
-          {{ console.log(listCommands) }}
           <img :src="item.url_image" width="128px" height="128px"><br>
           <div class="prog-text">
             Name: {{ item.name }}<br>
@@ -60,7 +70,7 @@
                 <span class="install-label">How to install:</span>
                 <ul class="install-commands">
                     <code>
-                        <li v-for="(command, index) in item.cmd_install.split(',')" :key="index">
+                        <li v-for="(command, index) in parseCommands(item.cmd_install)" :key="index">
                           {{ index+1 }}. {{ command.trim() }} 
                         </li>
                     </code>

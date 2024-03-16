@@ -12,7 +12,6 @@
     try {
       const response = await axios.get("https://wlshback.onrender.com/info-win");
       data.value = response.data;
-      console.log(data.value);
     } catch (error) {
       console.log(error);
     }

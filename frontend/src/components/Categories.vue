@@ -8,7 +8,6 @@
     try {
       const response = await axios.get("https://wlshback.onrender.com/categories");
       data.value = response.data;
-      console.log(data.value);
     } catch (error) {
       console.log(error);
     }

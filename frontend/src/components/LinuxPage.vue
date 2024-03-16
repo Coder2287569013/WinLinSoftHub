@@ -6,11 +6,10 @@
 
     onMounted(async () => {
         try {
-        const response = await axios.get("https://wlshback.onrender.com/lin-os");
-        data.value = response.data;
-        console.log(data.value);
+            const response = await axios.get("https://wlshback.onrender.com/lin-os");
+            data.value = response.data;
         } catch (error) {
-        console.log(error);
+            console.log(error);
         }
     });
 </script>

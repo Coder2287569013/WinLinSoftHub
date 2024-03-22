@@ -21,15 +21,21 @@
   });
 
   const parseCommands = function(cmd_install) {
+    console.log(cmd_install);
     var listCommands = cmd_install.split('||');
-    console.log(listCommands);
-    var index = 0;
-    if (osParam.value == "Linux Mint") {
-      index = 0;
+    var commands = '';
+    if (listCommands.length < 2) {
+      commands = listCommands[0].split(',')
     } else {
-      index = osList.findIndex(isOsParam);
+      console.log(listCommands);
+      var index = 0;
+      if (osParam.value == "Linux Mint") {
+        index = 0;
+      } else {
+        index = osList.findIndex(isOsParam);
+      }
+      commands = listCommands[index].split(',');
     }
-    var commands = listCommands[index].split(',');
     return commands
   }
 

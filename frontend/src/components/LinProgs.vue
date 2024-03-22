@@ -22,6 +22,7 @@
 
   const parseCommands = function(cmd_install) {
     var listCommands = cmd_install.split('||');
+    console.log(listCommands);
     var index = 0;
     if (osParam.value == "Linux Mint") {
       index = 0;

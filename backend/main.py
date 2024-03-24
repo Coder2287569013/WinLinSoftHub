@@ -5,10 +5,7 @@ import sqlite3
 import database
 
 app = FastAPI()
-category = None
-newUser = None
 os_c = None
-user_active = False
 
 app.add_middleware(
     CORSMiddleware,
@@ -109,8 +106,3 @@ async def users_activity(userActivity: dict):
     conn.commit()
     conn.close()
     return userActivity
-
-@app.get("/get-user-activity")
-async def getActivity():
-    global user_active
-    return user_active

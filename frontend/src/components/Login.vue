@@ -64,8 +64,7 @@ const checkUser = async() => {
                     document.getElementById('modalHeader').style.backgroundColor = '#5cb85c';
                     state.value = "Success";
                     checkStatus.value = "Successfully logined!";
-                    const responseActivity = await axios.get("https://wlshback.onrender.com/get-user-activity");
-                    userData.value = responseActivity.data;
+                    userData.value = true;
                 } catch (error) {
                     console.log(error);
                     state.value = "Error";

@@ -115,7 +115,7 @@ const checkUser = async() => {
         </div>
         <div class="input-group">
             <label for="password">Password:</label>
-            <input type="password" v-model="existUser.password" id="password" placeholder=" Type Password"><br>
+            <input type="password" v-model="existUser.password" id="password" placeholder="Type Password"><br>
         </div>
         <button @click="checkUser">Login</button>
         <div class="ret-to-reg">Don't have an account? <router-link :to="`/register`">Register</router-link></div>
